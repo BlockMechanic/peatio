@@ -405,15 +405,13 @@ ActiveRecord::Schema.define(version: 2020_09_03_113109) do
   end
 
   create_table "withdraw_limits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "currency_id", limit: 20, default: "any", null: false
     t.string "group", limit: 32, default: "any", null: false
     t.string "kyc_level", limit: 32, default: "any", null: false
     t.decimal "limit_24_hour", precision: 32, scale: 16, default: "0.0", null: false
     t.decimal "limit_1_month", precision: 32, scale: 16, default: "0.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["currency_id", "group", "kyc_level"], name: "index_withdraw_limits_on_currency_id_and_group_and_kyc_level", unique: true
-    t.index ["currency_id"], name: "index_withdraw_limits_on_currency_id"
+    t.index ["group", "kyc_level"], name: "index_withdraw_limits_on_group_and_kyc_level", unique: true
     t.index ["group"], name: "index_withdraw_limits_on_group"
     t.index ["kyc_level"], name: "index_withdraw_limits_on_kyc_level"
   end
