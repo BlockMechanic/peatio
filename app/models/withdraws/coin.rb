@@ -1,6 +1,8 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
+# Deprecated
+# TODO: Delete this class and update type column
 module Withdraws
   class Coin < Withdraw
     include HasOneBlockchainThroughCurrency
@@ -20,20 +22,6 @@ module Withdraws
       if blockchain_api&.supports_cash_addr_format? && rid?
         errors.add(:rid, :invalid) unless CashAddr::Converter.is_valid?(rid)
       end
-    end
-
-    def audit!
-      # TODO: Revert this inspection with WalletService/BlockchainService v2.
-      # wallet = Wallet.active.deposit.find_by(currency_id: currency_id)
-      # inspection = WalletClient[wallet].inspect_address!(rid)
-
-      # if inspection[:is_valid] == false
-      #   Rails.logger.info { "#{self.class.name}##{id} uses invalid address: #{rid.inspect}" }
-      #   reject!
-      # else
-      #   super
-      # end
-      super
     end
 
     def as_json(*)
